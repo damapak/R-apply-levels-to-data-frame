@@ -1,6 +1,5 @@
-#YOUR DATA MUST BE IN FACTORS FOR THIS TO WORK
 #most data, including qualtrics downloads, will be automatically imported into factors.
-#the only time this isn't the case is if the as.is option is used (keeps data as char, int, etc.)
+#to prevent this from happening, can use 'as.is' or 'stringsAsFactors' options.
 
 #list of levels used in surveys
 
