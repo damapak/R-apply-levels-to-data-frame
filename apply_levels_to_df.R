@@ -53,35 +53,30 @@ for (x in names(survey_data)) {
   # columns that have more than 25 unique levels 
   if ( is.numeric(survey_data[,x]) == FALSE && 
        all(is.na(survey_data[,x])) == FALSE &&
-       length ( names ( table ( survey_data[,x] ) ) ) < 25 ) { 
+       length(names(table(survey_data[ , x]))) < 25 ) { 
     
-    matched_levels <- list()  #reset matched_levels
-    survey_data[,x] <- as.factor (toupper(survey_data[,x]) )
-    
+    matched_levels <- list()  
+    survey_data[ , x] <- as.factor(toupper(survey_data[ , x]))
     for (y in names(level_check)) { 
-      
       #for all pre-defined level names, if all the levels, excluding those identified in the c() , are in a pre-def level
-      if (all(levels(survey_data[,x])[! levels(survey_data[,x]) %in% c(""," ","NA","NOT APPLICABLE") ] %in% level_check[[y]] ==TRUE)) {
-        
+      if (all(levels(survey_data[ , x])[! levels(survey_data[ , x]) %in% c("", " ", "NA", "NOT APPLICABLE")] %in% level_check[[y]] == TRUE)) {
         matched_levels <- append(matched_levels, y)
-      }
-      
+      } 
     }
     
     if (length(matched_levels) > 1 ) {
-      #multiple level matches.  ultimately allow manual selection for multiple matches.
-      survey_data[,x] = factor(survey_data[,x], level_check[[matched_levels[[1]]]], ordered=TRUE)
+      #multiple level scale matches.  ultimately allow manual selection for multiple matches.
+      survey_data[ , x] <- factor(survey_data[ , x], level_check[[matched_levels[[1]] ]], ordered = TRUE)
     } 
     
     else if (length(matched_levels) == 1) {
-      #single level matches (one pre-defined level that fits criteria)
-      survey_data[,x] = factor(survey_data[,x], level_check[[matched_levels[[1]]]], ordered=TRUE)
+      #only one pre-defined level scale matched)
+      survey_data[ , x] <- factor(survey_data[ , x], level_check[[matched_levels[[1]] ]], ordered = TRUE)
     } 
     
     else {
       
       if (levels(survey_data[,x])[1] %in% c(""," ") ) {
-        
         levels(survey_data[,x])[1] <- NA        
       }
       
